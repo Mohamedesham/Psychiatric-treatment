@@ -668,18 +668,18 @@ packages:
     dependency: transitive
     description:
       name: permission_handler
-      sha256: "33c6a1253d1f95fd06fa74b65b7ba907ae9811f9d5c1d3150e51417d04b8d6a8"
+      sha256: "97c39c9cfded9f6d7fa897e31386fd45d438c6ef39f070f761a31f55208f09ff"
       url: "https://pub.dev"
     source: hosted
-    version: "10.2.0"
+    version: "10.2.1"
   permission_handler_android:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: f1044cf68ae3a56b31854b7b3e022d5a50dd78b5a28bba5287bcf1d9e3e62537
+      sha256: "8f6a95ccbca13766882f95d32684d7c9bfe6c45650c32bedba948ef1c6a4ddf7"
       url: "https://pub.dev"
     source: hosted
-    version: "10.2.2"
+    version: "10.2.3"
   permission_handler_apple:
     dependency: transitive
     description:
@@ -1018,10 +1018,10 @@ packages:
     dependency: transitive
     description:
       name: zego_uikit
-      sha256: "1dac44bd3b59073fe1744c3cbf879114266779534858388790005884805d8d5f"
+      sha256: "04d270f980c998f9068c33e199aedaa503715d6ff28974a23763767d44143c4b"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.13"
+    version: "2.5.15"
   zego_uikit_prebuilt_call:
     dependency: "direct main"
     description:

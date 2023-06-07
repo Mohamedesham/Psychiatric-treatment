@@ -4,6 +4,7 @@ import 'package:final_graduation_project/provider/check_provider.dart';
 import 'package:final_graduation_project/provider/contol_provider.dart';
 import 'package:final_graduation_project/provider/photo_provider.dart';
 import 'package:final_graduation_project/screens/start_screen.dart';
+import 'package:final_graduation_project/screens/video_chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
       ),
-      home: StartPage(),
+      home: VideoScreen(callID: '',),
     );
   }
 }
