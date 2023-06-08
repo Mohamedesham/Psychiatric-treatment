@@ -11,6 +11,8 @@ import '../auth/auth_provider.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -30,9 +32,9 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: 2, // Replace with the actual item count
+        itemCount: prov.user.name.length, // Replace with the actual item count
         itemBuilder: (context, index) {
-          List<String> names = ['John Doe', 'Jane Smith'];
+          List<AuthProvider> names = [];
           List<String> imagePaths = ['assets/doct1.jpg', 'assets/doct2.jpg']; // Replace with your actual image paths or data source
           List<String> phoneNumbers = ['123-456-7890', '987-654-3210']; // Replace with your actual phone numbers or data source
 
@@ -50,8 +52,8 @@ class HomeScreen extends StatelessWidget {
             subtitle:Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  names[index],
+                Text("hello",
+                  // names[index],
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Increase the font size for the name
                 ),
                 SizedBox(height: 5),

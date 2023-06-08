@@ -48,7 +48,7 @@ class AuthProvider extends ChangeNotifier {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        Doctoruser(user, name,email);
+        Doctorsave(user, name,email);
       });
       Get.offAll(DoctorHome());
     } catch (e) {
@@ -63,7 +63,7 @@ class AuthProvider extends ChangeNotifier {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        Patientuser(user, name,email);
+        Patientsave(user, name,email);
       });
       Get.offAll(HomeScreen());
     } catch (e) {
@@ -73,7 +73,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
 
-  Patientuser(UserCredential user, String name,String email) async {
+  Patientsave(UserCredential user, String name,String email) async {
     PatientModel usermodel = PatientModel(
         name: name == "" ? user.user!.displayName! : name,
         email:email== ""?user.user!.displayName!:email,
@@ -85,14 +85,14 @@ class AuthProvider extends ChangeNotifier {
         .set(usermodel.toJson());
   }
 
-  Doctoruser(UserCredential user, String name,String email) async {
+  Doctorsave(UserCredential user, String name,String email) async {
     DoctorModel doctormodel = DoctorModel(
         name: name == "" ? user.user!.displayName! : name,
         email:email== ""?user.user!.displayName!:email,
         ID: user.user!.uid,
         image: "");
     await _firestore
-        .collection("users")
+        .collection("doctors")
         .doc(user.user!.uid)
         .set(doctormodel.toJson());
   }

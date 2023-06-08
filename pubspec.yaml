@@ -31,6 +31,7 @@ dependencies:
       url: https://github.com/draz26648/tflite_edited
   image_picker: ^0.8.7+5
   zego_uikit_prebuilt_call: ^3.4.0
+  firebase_messaging: ^14.6.2
 
 dev_dependencies:
   flutter_test:
