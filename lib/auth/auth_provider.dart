@@ -5,16 +5,17 @@ import 'package:final_graduation_project/screens/choose_account_screen.dart';
 import 'package:final_graduation_project/screens/docotr_screen/doctor_screen.dart';
 import 'package:final_graduation_project/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthProvider extends ChangeNotifier {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseFirestore database = FirebaseFirestore.instance;
   PatientModel user = PatientModel(name: '', email: "", ID: "", image: "");
   DoctorModel doctor = DoctorModel(name: '', email: "", ID: "", image: "");
+  List<QueryDocumentSnapshot> doctorList =[]; // دى list بسيف فيها الداتا اللى بجيبها من الفايربيز
+  List<PatientModel> patientList =[];
 
   void Login(String email, password) async {
     try {
@@ -30,8 +31,8 @@ class AuthProvider extends ChangeNotifier {
   void LoginDoctor(String email, password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      Get.to(DoctorHome());
-      Get.offAll(DoctorHome());
+      Get.to(const DoctorHome());
+      Get.offAll(const DoctorHome());
     } catch (e) {
       Get.snackbar("Login error", e.toString(),
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.orange);
@@ -40,7 +41,7 @@ class AuthProvider extends ChangeNotifier {
 
   void SignOut() async {
     await _auth.signOut();
-    Get.offAll(ChosseAccount());
+    Get.offAll(const ChosseAccount());
   }
 
   void RegisterDoctor(String email, password,confrimpassword, name) async {
@@ -48,7 +49,7 @@ class AuthProvider extends ChangeNotifier {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        Doctorsave(user, name,email);
+        Doctoruser(user, name,email);
       });
       Get.offAll(DoctorHome());
     } catch (e) {
@@ -63,7 +64,9 @@ class AuthProvider extends ChangeNotifier {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        Patientsave(user, name,email);
+        Patientuser(user, name,email);
+        PatientModel userList = PatientModel(name: name, email: email, ID: "", image: "");
+        patientList.add(userList);
       });
       Get.offAll(HomeScreen());
     } catch (e) {
@@ -73,7 +76,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
 
-  Patientsave(UserCredential user, String name,String email) async {
+  Patientuser(UserCredential user, String name,String email) async {
     PatientModel usermodel = PatientModel(
         name: name == "" ? user.user!.displayName! : name,
         email:email== ""?user.user!.displayName!:email,
@@ -85,7 +88,7 @@ class AuthProvider extends ChangeNotifier {
         .set(usermodel.toJson());
   }
 
-  Doctorsave(UserCredential user, String name,String email) async {
+  Doctoruser(UserCredential user, String name,String email) async {
     DoctorModel doctormodel = DoctorModel(
         name: name == "" ? user.user!.displayName! : name,
         email:email== ""?user.user!.displayName!:email,
@@ -119,5 +122,12 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
-
+  // هنا بجيب كل الدكنور من ال firebase
+  void getDoctors()async
+  {
+    await database.collection('doctors').get().then((value){
+      doctorList=value.docs;
+      notifyListeners();
+    });
+  }
 }

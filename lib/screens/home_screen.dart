@@ -1,4 +1,4 @@
- import 'package:final_graduation_project/screens/about_screen.dart';
+import 'package:final_graduation_project/screens/about_screen.dart';
 import 'package:final_graduation_project/screens/model_screen.dart';
 import 'package:final_graduation_project/screens/setteing_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +11,7 @@ import '../auth/auth_provider.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var prov = Provider.of<AuthProvider>(context);
-
+    var prof = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -32,18 +31,36 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: prov.user.name.length, // Replace with the actual item count
+        itemCount: prof.doctorList.length, // Replace with the actual item count
         itemBuilder: (context, index) {
-          List<AuthProvider> names = [];
+          List<String> names = ['John Doe', 'Jane Smith'];
           List<String> imagePaths = ['assets/doct1.jpg', 'assets/doct2.jpg']; // Replace with your actual image paths or data source
           List<String> phoneNumbers = ['123-456-7890', '987-654-3210']; // Replace with your actual phone numbers or data source
 
           return ListTile(
-            title: Text('Doctor '),
+            title: Text(prof.doctorList[index]['name']),
             // Add any additional properties or widgets for each item
             onTap: () {
-              // Handle item tap, navigate to another screen
-              Get.to(Model());
+              showDialog(context: context, builder: (context) => AlertDialog(
+                title: Text('Start Session'),
+                content: Text("Do you want to start session now ?"),
+                actions: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(onPressed: () {
+                        Get.to(Model());
+                      }, icon: Icon(Icons.done_outline_sharp,color: Colors.green,)),
+                      Text("yes"),
+                      SizedBox(width:20),
+                      IconButton(onPressed: () {
+                        Get.to(HomeScreen());
+                      }, icon: Icon(Icons.dangerous_rounded,color: Colors.red,)),
+                      Text("No"),
+                    ],
+                  ),
+                ],
+              ),);
             },
             leading: CircleAvatar(
               backgroundImage: AssetImage(imagePaths[index]),
@@ -52,13 +69,13 @@ class HomeScreen extends StatelessWidget {
             subtitle:Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("hello",
-                  // names[index],
+                Text(
+                  prof.doctorList[index]['name'],
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Increase the font size for the name
                 ),
                 SizedBox(height: 5),
                 Text(
-                  phoneNumbers[index],
+                  prof.doctorList[index]['email'],
                   style: TextStyle(fontSize: 14), // Adjust the font size for the phone number
                 ),
 
@@ -292,7 +309,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            Provider.of<AuthProvider>(context).SignOut();
+                            Provider.of<AuthProvider>(context,listen: false).SignOut();
                           },
                           child: Text("Log Out"),
                         ),
