@@ -44,13 +44,14 @@ class AuthProvider extends ChangeNotifier {
     Get.offAll(const ChosseAccount());
   }
 
-  void RegisterDoctor(String email, password,confrimpassword, name) async {
+   void RegisterDoctor(String email, password,confrimpassword, name) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
         Doctoruser(user, name,email);
       });
+      await Future.delayed(Duration(seconds: 5));
       Get.offAll(DoctorHome());
     } catch (e) {
       Get.snackbar("Signout error", e.toString(),

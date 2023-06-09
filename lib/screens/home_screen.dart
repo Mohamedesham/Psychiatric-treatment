@@ -1,6 +1,7 @@
 import 'package:final_graduation_project/screens/about_screen.dart';
 import 'package:final_graduation_project/screens/model_screen.dart';
 import 'package:final_graduation_project/screens/setteing_screen.dart';
+import 'package:final_graduation_project/screens/video_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -49,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(onPressed: () {
-                        Get.to(Model());
+                        Get.to(VideoScreen(callID: ""));
                       }, icon: Icon(Icons.done_outline_sharp,color: Colors.green,)),
                       Text("yes"),
                       SizedBox(width:20),
